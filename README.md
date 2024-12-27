@@ -5,8 +5,10 @@
 
 ### Who is it for?
 - International high school students
-    - University destination: 
-    - Major/Career: 
+    - University destination
+        - United States 4-year university
+    - Major/Career
+        - Startups
     - Education
         - Grade: 11-12
         - Curriculum: IB Diploma
@@ -28,13 +30,20 @@
 ## Solution
 - AI text editor
     - Tell your AI what you want
-        - Search the web for you
+        - Scrape the web for you
 
-### Requirements
-####Priority 0 (Essential)
+### Feature Requirements
+- Create Brilliance Faster
+- Deliver Excellence Faster
+- Achieve Greatness Faster
+- Forge Success Faster
+
+#### Priority 0 (Essential)
 - User can give commands
 - Assistant executes commands
 - Assistant can scrape the web
+    - General web search
+    - Reference specific websites
 - User can confirm assistant changes
 - Collaborative text editor
     - Blocks, or simply text, or freeform?
@@ -48,17 +57,19 @@
 
 #### Priority 1 (Must have)
 - Share doc with others
+    - Realtime collaboration
 - Text autocomplete
 
 #### Priority 2 (Important)
 - Planning tab (assistant will use Plan to execute commands in text editor)
-    - User can confirm assistant web scraping actions step-by-step 
+    - User can confirm assistant web scraping actions step-by-step
     - Assistant suggestions (user doesn't know what they want or how they want it)
 
 #### Priority 3 (Nice to have)
 - Color themes
 
 #### Ideas
+- Assistant commands based on image
 - Verify web scraping results
 - Realtime voice mode
 - Calendar tab
@@ -66,6 +77,20 @@
 - Upload and manage files
     - Files to edit
     - Files for reference
+
+### Technology Requirements
+- Assistant
+    - Context of user
+    - Context of all document
+    - Context of previous commands
+    - Context of web
+    - Context of files
+- Text autocomplete
+    - Complete text
+    - Smart rewrites
+    - Multi-line editing
+- Realtime collaboration
+- Web scraping
 
 ### User Interface / User Experience
 UI
@@ -75,8 +100,15 @@ UI
 - Hidden
     - Command history
 
-### Platform
+UX
+- 
 
+Colors
+- Light mode
+- Dark mode
+
+### Platform
+- Web app
 
 ## Pricing
 - Free
@@ -89,15 +121,16 @@ UI
 - Pay
     - Smarter models (o3, o3-mini)
     - Realtime voice mode
+    - Upload and manage reference files
 
 ________________________________________________
 
 ### An AI Buddy for intuitive analysts.
 
 #### AI buddies
-1) An AI product for **product managers** to help them ideate and plan product development with an AI buddy. The product manager would be the creative one who makes the final decisions and the AI buddy is there to help bounce ideas, direct the brainstorming sessions, and generate diagrams/drawings to provide new creative options for the product managers.
+1. An AI product for **product managers** to help them ideate and plan product development with an AI buddy. The product manager would be the creative one who makes the final decisions and the AI buddy is there to help bounce ideas, direct the brainstorming sessions, and generate diagrams/drawings to provide new creative options for the product managers.
     - 
-2) An AI product for **political analysts** to help them analyze with an AI buddy.
+2. An AI product for **political analysts** to help them analyze with an AI buddy.
 
 #### This is for INFJs who:
 - Product managers
