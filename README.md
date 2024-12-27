@@ -1,9 +1,9 @@
 # Nova
 
-### Purpose
+## Purpose
 - Help high school students apply to university
 
-#### Who is it for?
+### Who is it for?
 - International high school students
     - University destination: 
     - Major/Career: 
@@ -22,16 +22,16 @@
             - Not lower class because they prefer safety over risk
             - It could be for the ruling class because they depend on all-or-nothing bets
 
-#### Problem
+### Problem
 - High school students are lazy and don't want to waste time researching universities and copying, pasting, and verifying information
 
-### Solution
+## Solution
 - AI text editor
     - Tell your AI what you want
         - Search the web for you
 
-#### Requirements
-Priority 0 (Essential)
+### Requirements
+####Priority 0 (Essential)
 - User can give commands
 - Assistant executes commands
 - Assistant can scrape the web
@@ -46,19 +46,19 @@ Priority 0 (Essential)
         - Drawings
         - Charts
 
-Priority 1 (Must have)
+#### Priority 1 (Must have)
 - Share doc with others
 - Text autocomplete
 
-Priority 2 (Important)
+#### Priority 2 (Important)
 - Planning tab (assistant will use Plan to execute commands in text editor)
     - User can confirm assistant web scraping actions step-by-step 
     - Assistant suggestions (user doesn't know what they want or how they want it)
 
-Priority 3 (Nice to have)
-- 
+#### Priority 3 (Nice to have)
+- Color themes
 
-##### Ideas
+#### Ideas
 - Verify web scraping results
 - Realtime voice mode
 - Calendar tab
@@ -67,7 +67,7 @@ Priority 3 (Nice to have)
     - Files to edit
     - Files for reference
 
-#### User Interface / User Experience
+### User Interface / User Experience
 UI
 - Display
     - Body: text editor
@@ -75,10 +75,10 @@ UI
 - Hidden
     - Command history
 
-#### Platform
+### Platform
 
 
-### Pricing
+## Pricing
 - Free
     - Download
     - Unlimited docs
