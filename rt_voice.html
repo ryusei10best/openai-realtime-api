@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Realtime Voice Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0a192f;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #e6f1ff;
+        }
+        label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            background: linear-gradient(to right, #e6f1ff, #8892b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #233554;
+            border-radius: 8px;
+            background-color: #112240;
+            color: #e6f1ff;
+            font-size: 1em;
+        }
+        button {
+            width: 100%;
+            padding: 12px 20px;
+            background-color: #1e3a8a;
+            color: #e6f1ff;
+            border: 1px solid #2d4eb1;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #2d4eb1;
+            transform: translateY(-2px);
+        }
+        #status {
+            margin-top: 25px;
+            font-weight: bold;
+            background: linear-gradient(to right, #64ffda, #a8b2d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* New Container Styles */
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Aurora Borealis Background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 70%;
+            height: 30%;
+            /* Modified to create a hollow donut shape */
+            background: radial-gradient(transparent 40%, rgba(127, 255, 212, 0.6) 45%, rgba(64, 224, 208, 0.4) 60%, rgba(0, 255, 255, 0.2) 80%);
+            filter: blur(30px);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Additional Aurora Layer */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 60%;
+            left: 50%;
+            width: 50%;
+            height: 20%;
+            /* Modified to create a hollow donut shape */
+            background: radial-gradient(transparent 35%, rgba(0, 255, 255, 0.4) 40%, rgba(64, 224, 208, 0.2) 55%, rgba(127, 255, 212, 0.1) 75%);
+            filter: blur(25px);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* New Styles for Conversation History */
+        .conversation-container {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .voice-activation {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .conversation-history {
+            flex: 1;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+        }
+
+        .message.user {
+            text-align: right;
+            color: #64ffda;
+        }
+
+        .message.assistant {
+            text-align: left;
+            color: #a8b2d1;
+        }
+    </style>
+</head>
+<body>
+    <div class="conversation-container">
+        <div class="voice-activation">
+            <div class="container">
+                <h1>Realtime Voice Chat</h1>
+                <label for="apiKey">OpenAI API Key:</label>
+                <input type="password" id="apiKey" placeholder="Enter your API Key">
+
+                <label for="model">Model:</label>
+                <select id="model">
+                    <option value="gpt-4o-realtime-preview-2024-12-17">GPT-4o Realtime Preview</option>
+                    <option value="gpt-4o-mini-realtime-preview-2024-12-17">GPT-4o Mini Realtime Preview</option>
+                </select>
+
+                <label for="voiceMode">Select Mode:</label>
+                <select id="voiceMode">
+                    <option value="ballad">Ballad</option>
+                    <option value="verse">Verse</option>
+                </select>
+
+                <button id="startButton">Start</button>
+                <button id="stopButton" disabled>Stop</button>
+
+                <p>Connection Status: <span id="status">Not Connected</span></p>
+            </div>
+        </div>
+        <div class="conversation-history">
+            <h2>Conversation</h2>
+            <div id="conversation">
+                <!-- Messages will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pc;     // RTCPeerConnection
+        let dc;     // RTCDatachannel
+        let localStream;
+
+        const apiKeyInput = document.getElementById('apiKey');
+        const modelSelect = document.getElementById('model');
+        const voiceModeSelect = document.getElementById('voiceMode');
+        const connectionStatus = document.getElementById('status');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+
+        // Handle the "Start" button
+        startButton.addEventListener("click", async () => {
+            const apiKey = apiKeyInput.value.trim();
+            if (!apiKey) {
+                alert('Please enter your OpenAI API Key.');
+                return;
+            }
+
+            // Disable the start button, enable the stop button
+            startButton.disabled = true;
+            stopButton.disabled = false;
+
+            connectionStatus.textContent = 'Connecting...';
+
+            try {
+                // Step 1: Create an ephemeral session via backend
+                const ephemeralData = await createEphemeralSession();
+                if (!ephemeralData.client_secret) {
+                    throw new Error('Could not obtain ephemeral key from the API. Check your API key.');
+                }
+                const ephemeralKey = ephemeralData.client_secret.value;
+
+                // Step 2: Initialize the WebRTC connection
+                await initWebRTC(ephemeralKey);
+                connectionStatus.textContent = 'Connected';
+            } catch (error) {
+                console.error('Failed to connect:', error);
+                connectionStatus.textContent = "Failed to connect";
+                startButton.disabled = false;
+                stopButton.disabled = true;
+            }
+        });
+
+        // Handle the "Stop" button
+        stopButton.addEventListener("click", () => {
+            if (pc) {
+                pc.close();
+            }
+            if (localStream) {
+                localStream.getTracks().forEach((track) => track.stop());
+            }
+            connectionStatus.textContent = 'Not Connected';
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        });
+
+        /**
+         * Creates an ephemeral session for the selected model using the backend.
+         */ 
+        async function createEphemeralSession() {
+            const apiKey = apiKeyInput.value.trim();
+            const model = modelSelect.value;
+            const voice = voiceModeSelect.value;
+
+            const response = await fetch('http://localhost:3000/api/ephemeral_sessions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}` // Optional: If you want to pass API key via headers
+                },
+                body: JSON.stringify({
+                    model,
+                    voice
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to create ephemeral session');
+            }
+
+            return await response.json();
+        }
+
+        /**
+         * Creates a new RTCPeerConnection, obtains local audio from device,
+         * and configures a WebRTC offer to the OpenAI Realtime API via backend.
+         */
+        async function initWebRTC(ephemeralKey) {
+            pc = new RTCPeerConnection();
+
+            // Set up to play remote audio from the model
+            const audioE1 = document.createElement('audio');
+            audioE1.autoplay = true;
+            audioE1.style.display = 'none';
+            document.body.appendChild(audioE1);
+
+            pc.ontrack = (event) => {
+                audioE1.srcObject = event.streams[0];
+            };
+
+            // Capture Local audio
+            localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const audioTrack = localStream.getTracks()[0];
+            pc.addTrack(audioTrack);
+
+            // Data channel for sending and receiving text-based events
+            dc = pc.createDataChannel("oai-events");
+            dc.addEventListener("message", (evt) => {
+                try {
+                    const structuredOutput = JSON.parse(evt.data);
+                    structuredOutput.forEach(message => {
+                        appendMessage(message.sender.toLowerCase(), message.message);
+                    });
+                } catch (error) {
+                    console.error("Error parsing structured output:", error);
+                }
+            });
+
+            // Create and set Local SDP offer
+            const offer = await pc.createOffer();
+            await pc.setLocalDescription(offer);
+
+            // Send the offer to the backend to relay to OpenAI Realtime API
+            const model = modelSelect.value;
+
+            const sdpResponse = await fetch('http://localhost:3000/api/realtime', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    model,
+                    sdp: offer.sdp
+                })
+            });
+
+            if (!sdpResponse.ok) {
+                const errorData = await sdpResponse.json();
+                throw new Error(errorData.error || 'Failed to initialize WebRTC connection');
+            }
+
+            const answerSdp = await sdpResponse.text();
+            await pc.setRemoteDescription({
+                type: 'answer',
+                sdp: answerSdp,
+            });
+
+            console.log("WebRTC connection established!");
+        }
+
+        // Function to append messages to the conversation history
+        function appendMessage(sender, text) {
+            const conversation = document.getElementById('conversation');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender);
+            messageDiv.textContent = `${sender === 'user' ? 'User' : 'Assistant'}: ${text}`;
+            conversation.appendChild(messageDiv);
+            conversation.scrollTop = conversation.scrollHeight;
+        }
+
+        // Example usage: Append messages when necessary
+        // appendMessage('user', 'Hello!');
+        // appendMessage('assistant', 'Hi there! How can I help you today?');
+    </script>
+</body>
+</html>
