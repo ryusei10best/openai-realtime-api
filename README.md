@@ -27,16 +27,26 @@
 ### Problem
 - High school students are lazy and don't want to waste time researching universities and copying, pasting, and verifying information
 
+#### Use Cases
+- **University list**: Daiki is a high school student who needs to choose which universities he will apply to, but he doesn't feel like doing all the research. 1) He asks his dad to compile a list of university names from the web that would be good for computer science and that are in Canada or the United States. 2) Then, he manually searches each university's website to find the application deadline, whether computer science requires Math HL, and whether the application requires a letter of recommendation.
+    - Web search / web scraping
+- **Product userflow**: Ryusei is a product manager who needs to create a userflow to ensure Reach Best guides the user to solve its problem beginning to end. 
+    - Diagrams
+- **Polisci essay**: Ryusei is a political science student who needs to write a Phd-level essay on the international security risks of AI.
+
+
+
+
 ## Solution
 - AI text editor
     - Tell your AI what you want
         - Scrape the web for you
 
 ### Feature Requirements
-- Create Brilliance Faster
-- Deliver Excellence Faster
-- Achieve Greatness Faster
-- Forge Success Faster
+- *Create Brilliance Faster*
+- *Deliver Excellence Faster*
+- *Achieve Greatness Faster*
+- *Forge Success Faster*
 
 #### Priority 0 (Essential)
 - User can give commands
@@ -58,12 +68,17 @@
 #### Priority 1 (Must have)
 - Share doc with others
     - Realtime collaboration
-- Text autocomplete
+- Text supercomplete
 
 #### Priority 2 (Important)
-- Planning tab (assistant will use Plan to execute commands in text editor)
+- Planning tab (manage LLM chaining)
+    - Objective
+    - Modules
+        - LLM prompt
+        - Web search
+    - Execute / stop
     - User can confirm assistant web scraping actions step-by-step
-    - Assistant suggestions (user doesn't know what they want or how they want it)
+    - Assistant suggestions (for users who need guidance because they don't know what they want or how they want it)
 
 #### Priority 3 (Nice to have)
 - Color themes
@@ -77,6 +92,7 @@
 - Upload and manage files
     - Files to edit
     - Files for reference
+- API Listener to other apps
 
 ### Technology Requirements
 - Assistant
@@ -85,10 +101,14 @@
     - Context of previous commands
     - Context of web
     - Context of files
-- Text autocomplete
-    - Complete text
-    - Smart rewrites
-    - Multi-line editing
+- Text supercomplete
+    - Autocomplete
+        - Single sentence context
+        - Inline editing
+    - Supercomplete
+        - Multi-sentence context
+        - Generates a diff
+        - Multi-line editing
 - Realtime collaboration
 - Web scraping
 
@@ -101,11 +121,15 @@ UI
     - Command history
 
 UX
-- 
+- Free
+- Mid
+- Goddess
 
 Colors
 - Light mode
 - Dark mode
+- God light mode
+- God dark mode
 
 ### Platform
 - Web app
@@ -115,12 +139,16 @@ Colors
     - Download
     - Unlimited docs
     - Share
-    - Text autocomplete
+    - Text supercomplete
+    - 1,000,000 AI commands (o1, o1-mini)
+    - 1,000,000 AI web search/scraping
+- Pay 
     - Unlimited AI commands (o1, o1-mini)
     - Unlimited AI web search/scraping
-- Pay
+- Pay **God Mode/Goddess** (Alexander Mvgnum user experience)
+    - *Without Lifting a Finger*
     - Smarter models (o3, o3-mini)
-    - Realtime voice mode
+    - Realtime voice mode (voice commands)
     - Upload and manage reference files
 
 ________________________________________________
