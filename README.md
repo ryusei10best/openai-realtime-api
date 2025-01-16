@@ -1,6 +1,7 @@
 # Nova
 
 ## Purpose
+- Help people invent, create, and compose with AI
 - Help high school students apply to university
 
 ### Who is it for?
@@ -17,7 +18,7 @@
         - Prioritizes and obsesses over their legacy above all else
             - They are motivated by the desire to be remembered after they die
         - Personality: ?
-        - Music: *Centuries* by Fall Out Boy, *Legends Never Die* by League of Legends, *Royalty* by Egzod et al.
+        - Music: *Captain Becks* by Anže Rozman and Camilo Forero, *Centuries* by Fall Out Boy, *Legends Never Die* by League of Legends, *Royalty* by Egzod et al.
         - Economic class: Upper middle class
             - Not upper class because they prefer to maintain their status over all-or-nothing bets
             - Not middle class because they prefer comfort over ambition
@@ -27,15 +28,22 @@
 ### Problem
 - High school students are lazy and don't want to waste time researching universities and copying, pasting, and verifying information
 
+#### Top Problems with Products like ChatGPT Canvas
+1. Long prompting
+    - Hard to specify exactly what I want (requires long prompts)
+2. Takes long to respond
+3. Response doesn't follow my style/design/formatting
+4. Hit the AI daily usage limit
+
 #### Use Cases
-- **University list**: Daiki is a high school student who needs to choose which universities he will apply to, but he doesn't feel like doing all the research. 1) He asks his dad to compile a list of university names from the web that would be good for computer science and that are in Canada or the United States. 2) Then, he manually searches each university's website to find the application deadline, whether computer science requires Math HL, and whether the application requires a letter of recommendation.
+- **Docs**: High School Student Creating Their List of Universities
+    - Daiki is a high school student who needs to choose which universities he will apply to, but he doesn't feel like doing all the research. 1) He asks his dad to compile a list of university names from the web that would be good for computer science and that are in Canada or the United States. 2) Then, he manually searches each university's website to find the application deadline, whether computer science requires Math HL, and whether the application requires a letter of recommendation.
     - Web search / web scraping
-- **Product userflow**: Ryusei is a product manager who needs to create a userflow to ensure Reach Best guides the user to solve its problem beginning to end. 
+- **Diagrams**: Product Manager Creating a Userflow Diagram for an AI College Counseling Web App
+    - Ryusei is a product manager who needs to create a userflow to ensure Reach Best guides the user to solve its problem beginning to end. 
     - Diagrams
+- **Sheets**: CFO Calculating the Valuation of His Cryptocurrency Marketplace Startup
 - **Polisci essay**: Ryusei is a political science student who needs to write a Phd-level essay on the international security risks of AI.
-
-
-
 
 ## Solution
 - AI text editor
